@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Depot</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <ul class="navbar-nav">
+                <li class="nav-item"><%= link_to 'Depot',store_index_url,class: 'nav-link active' %></li>
+          </ul>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+           <% if session[:user_id] %>
+              <ul class="navbar-nav">
+                <li class="nav-item"><%= link_to 'Orders',orders_path,class: 'nav-link' %></li>
+                <li class="nav-item"><%= link_to 'Products', products_path,class: 'nav-link' %></li>
+                <li class="nav-item"><%= link_to  'Users',users_path,class: 'nav-link'%></li>
+                <li><%= button_to 'Logout', logout_path, method: :delete ,class:'btn btn-danger'%></li>
+            </ul>
+          <%else%>
+            <li><%= button_to 'Login', login_path, method: :get ,class:'btn btn-success'%></li>
+          <% end %>
+          </div>
+
+
+          <header class="main">
+          <aside>
+              <%= form_tag store_index_path, class: 'locale' do %>
+              <%= select_tag 'set_locale',
+              options_for_select(LANGUAGES, I18n.locale.to_s),
+              onchange: 'this.form.submit()' %>
+            
+            <% end %>
+          </aside>
+          <%
+=begin%>
+ <%= image_tag 'logo.svg', alt: 'The Pragmatic Bookshelf' %> 
+<%
+=end%>
+          <h1><%= @page_title %></h1>
+          </header>
+        </div>
+    </nav>
+    <section class="content">
+          <nav class="side_nav">
+            <% if @cart %>
+              <div id="cart" class="">
+                <%= render_if @cart && @cart.line_items.any?, @cart %>
+              </div>
+            <% end %>
+            <ul>
+              <li><a href="/"><%= t('.home') %></a></li>
+              <li><a href="/questions"><%= t('.questions') %></a></li>
+              <li><a href="/news"><%= t('.news') %></a></li>
+              <li><a href="/contact"><%= t('.contact') %></a></li>
+            </ul>
+            
+            
+          </nav>
+          <main class='<%= controller.controller_name %>'>
+            <%= yield %>
+          </main>
+
+    </section>
+  </body>
+</html>
