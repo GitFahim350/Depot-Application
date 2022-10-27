@@ -30,7 +30,7 @@ class CartsController < ApplicationController
 
     respond_to do |format|
       if @cart.save
-        # format.html { redirect_to cart_url(@cart), notice: "Cart was successfully created." }
+       
         format.html { redirect_to @line_item.cart }
         format.json { render :show, status: :created, location: @cart }
       else
@@ -54,19 +54,19 @@ class CartsController < ApplicationController
   end
 
   # DELETE /carts/1 or /carts/1.json
-  def destroy
+
    
 
     def destroy
       @cart.destroy if @cart.id == session[:cart_id]
       session[:cart_id] = nil
       respond_to do |format|
-      format.html { redirect_to store_index_url,
-      notice: 'Your cart is currently empty' }
-      format.json { head :no_content }
-    end
+        format.html { redirect_to store_index_url,
+            notice: 'Your cart is currently empty' }
+        format.json { head :no_content }
       end
-  end
+    end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

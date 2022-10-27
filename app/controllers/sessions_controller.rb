@@ -1,7 +1,8 @@
 class SessionsController < ApplicationController
   skip_before_action :authorize
+  before_action :isauthorized, only: %i[ new create]
+  
   def new
-
   end
 
   def create
@@ -18,4 +19,12 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to store_index_url, notice: "Logged out"
   end
+
+
+  protected
+        def isauthorized
+            if User.find_by(id: session[:user_id])
+                redirect_to store_index_url, notice: "You are logged in"
+            end
+        end
 end

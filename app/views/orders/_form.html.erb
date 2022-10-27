@@ -1,29 +1,19 @@
 <%= form_with(model: order) do |form| %>
 <% if order.errors.any? %>
   <div id="error_explanation">
-    <%
-=begin%>
- <h2><%= pluralize(order.errors.count, "error") %>
-    prohibited this order from being saved:</h2> 
-<%
-=end%>
+   
 
     <h2><%=raw t('errors.template.header', count: @order.errors.count,
 
       model: t('activerecord.models.order')) %>.</h2>
+
+
+      
     <p><%= t('errors.template.body') %></p>
-
-
-
-
 
     <ul>
       <% order.errors.full_messages.each do |message| %>
-      <%
-=begin%>
- <li><%= message %></li> 
-<%
-=end%>
+     
           <li><%=raw message %></li>
       <% end %>
     </ul>
@@ -44,7 +34,7 @@
   </div>
 
   <div>
-    <%= form.label :pay_type %>
+    <%= form.label :pay_type, t('.pay_type') %>
     <%= form.select :pay_type, Order.pay_types.keys,
                     prompt: 'Select a payment method' %>
   </div>

@@ -29,10 +29,17 @@
 
         <td class="actions">
           <ul>
-            <li><%= link_to 'Show', product %></li>
-            <li><%= link_to 'Edit', edit_product_path(product) %></li>
+            <li><%= link_to 'Show', product_path(product) %></li>
+            <%
+=begin%>
+ <h1><%=product.title%></h1> 
+<%
+=end%>
+
+
+            <li><%= link_to 'Edit', edit_product_path(product,product_title:product.title) %></li>
             <li>
-              <%= link_to 'Destroy',product, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <%= button_to 'Destroy',product_path(product), method: :delete, data: { confirm: 'Are you sure?' } %>
             </li>
           </ul>
         </td>
